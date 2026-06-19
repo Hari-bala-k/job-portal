@@ -20,7 +20,7 @@ public class Application {
      @Id
      @GeneratedValue(strategy = GenerationType.IDENTITY)    
      private Long id;
-     private String status;
+     private ApplicationStatus  status;
      private  LocalDate applicationDate;
      
      @ManyToOne
