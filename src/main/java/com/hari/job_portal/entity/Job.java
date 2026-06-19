@@ -23,7 +23,7 @@ public class Job {
     private Long id;
     private String title;
     private String description;
-    private String salary;
+    private Double salary;
     private String experience;
     private String location;
     
