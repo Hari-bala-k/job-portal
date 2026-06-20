@@ -25,7 +25,7 @@ public class User {
     private String email;
     private String password;
     private String phone;
-    private String role;
+    private Role role;
    
     @OneToMany(mappedBy = "user")
     private List<Application> applications;
