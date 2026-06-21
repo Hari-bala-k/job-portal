@@ -33,4 +33,17 @@ public class JobService {
                 .orElseThrow(() -> new IllegalArgumentException("Job not found with ID: " + id));
         jobRepository.deleteById(id);
     }
+
+    public Job updateJob(Long id, Job updatedJob) {
+        Job existingJob = jobRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Job not found with ID: " + id));
+
+        existingJob.setTitle(updatedJob.getTitle());
+        existingJob.setDescription(updatedJob.getDescription());
+        existingJob.setLocation(updatedJob.getLocation());
+        existingJob.setSalary(updatedJob.getSalary());
+        existingJob.setCompany(updatedJob.getCompany());
+
+        return jobRepository.save(existingJob);
+    }
 }
