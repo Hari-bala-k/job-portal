@@ -45,11 +45,12 @@ public class UserService{
    public User updateUser(Long id, User updatedUser) {
         User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + id));
-
-        existingUser.setName(updatedUser.getName());
-        existingUser.setEmail(updatedUser.getEmail());
-        existingUser.setPassword(updatedUser.getPassword());
-        existingUser.setRole(updatedUser.getRole());
+        
+    existingUser.setName(updatedUser.getName());
+    existingUser.setEmail(updatedUser.getEmail());
+    existingUser.setPassword(updatedUser.getPassword());
+    existingUser.setRole(updatedUser.getRole());
+    existingUser.setPhone(updatedUser.getPhone());
 
         return userRepository.save(existingUser);
     }
