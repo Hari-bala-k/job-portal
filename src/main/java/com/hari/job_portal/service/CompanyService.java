@@ -34,4 +34,16 @@ public class CompanyService {
     public List<Company> getAllCompanies() {
         return companyRepository.findAll();
     }
+
+    public Company updateCompany(Long id, Company updatedCompany) {
+        Company existingCompany = companyRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Company not found with ID: " + id));
+
+        existingCompany.setName(updatedCompany.getName());
+        existingCompany.setDescription(updatedCompany.getDescription());
+        existingCompany.setLocation(updatedCompany.getLocation());
+        existingCompany.setWebsite(updatedCompany.getWebsite());
+
+        return companyRepository.save(existingCompany);
+    }
 }
