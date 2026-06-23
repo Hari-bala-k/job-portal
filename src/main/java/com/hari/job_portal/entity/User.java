@@ -2,6 +2,8 @@ package com.hari.job_portal.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -32,5 +34,6 @@ public class User {
     private Role role;
    
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Application> applications;
 }
