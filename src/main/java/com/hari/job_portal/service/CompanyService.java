@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.hari.job_portal.entity.Company;
+import com.hari.job_portal.exception.ResourceNotFoundException;
 import com.hari.job_portal.repository.CompanyRepository;
 
 @Service
@@ -22,12 +23,12 @@ public class CompanyService {
 
     public Company getCompanyById(Long id) {
         return companyRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Company not found with ID: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Company not found with ID: " + id));
     }
 
     public void deleteCompany(Long id) {
         companyRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Company not found with ID: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Company not found with ID: " + id));
         companyRepository.deleteById(id);
     }
 
@@ -37,7 +38,7 @@ public class CompanyService {
 
     public Company updateCompany(Long id, Company updatedCompany) {
         Company existingCompany = companyRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Company not found with ID: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Company not found with ID: " + id));
 
         existingCompany.setName(updatedCompany.getName());
         existingCompany.setDescription(updatedCompany.getDescription());

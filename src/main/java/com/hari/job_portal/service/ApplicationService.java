@@ -9,6 +9,7 @@ import com.hari.job_portal.entity.Application;
 import com.hari.job_portal.entity.ApplicationStatus;
 import com.hari.job_portal.entity.Job;
 import com.hari.job_portal.entity.User;
+import com.hari.job_portal.exception.ResourceNotFoundException;
 import com.hari.job_portal.repository.ApplicationRepository;
 import com.hari.job_portal.repository.JobRepository;
 import com.hari.job_portal.repository.UserRepository;
@@ -30,10 +31,10 @@ public class ApplicationService {
         Application application = new Application();
        
        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + userId));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
 
        Job job = jobRepository.findById(jobId)
-                .orElseThrow(() -> new IllegalArgumentException("Job not found with ID: " + jobId)); 
+                .orElseThrow(() -> new ResourceNotFoundException("Job not found with ID: " + jobId)); 
                 
         application.setJob(job);
         application.setUser(user);
@@ -44,7 +45,7 @@ public class ApplicationService {
 
     public Application updateApplicationStatus(Long applicationId, ApplicationStatus status) {
         Application application = applicationRepository.findById(applicationId)
-                .orElseThrow(() -> new IllegalArgumentException("Application not found with ID: " + applicationId));
+                .orElseThrow(() -> new ResourceNotFoundException("Application not found with ID: " + applicationId));
         application.setStatus(status);
         return applicationRepository.save(application);
     }
