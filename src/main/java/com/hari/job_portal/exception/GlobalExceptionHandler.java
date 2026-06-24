@@ -7,11 +7,16 @@ import org.springframework.http.HttpStatus;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    
+
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(ResourceNotFoundException.class)
     public String handleResourceNotFoundException(ResourceNotFoundException ex) {
         return ex.getMessage();
     }
-
+    
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(DuplicateResourceException.class)
+    public String handleDuplicateResourceException(DuplicateResourceException ex) {
+        return ex.getMessage();
+    }
 }
