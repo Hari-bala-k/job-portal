@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.hari.job_portal.entity.User;
+import com.hari.job_portal.exception.DuplicateResourceException;
 import com.hari.job_portal.exception.ResourceNotFoundException;
 import com.hari.job_portal.repository.UserRepository;
 
@@ -19,7 +20,7 @@ public class UserService{
 
     public User saveUser(User user)  {
         if(userRepository.existsByEmail(user.getEmail())) {
-           throw new IllegalArgumentException("Email already exists: " + user.getEmail());
+           throw new DuplicateResourceException("Email already exists: " + user.getEmail());
         }
         return userRepository.save(user);
     }

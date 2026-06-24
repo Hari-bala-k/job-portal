@@ -1,7 +1,6 @@
 package com.hari.job_portal.service;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import org.springframework.stereotype.Service;
 
