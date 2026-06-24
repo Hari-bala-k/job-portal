@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.hari.job_portal.entity.Job;
+import com.hari.job_portal.exception.ResourceNotFoundException;
 import com.hari.job_portal.repository.JobRepository;
 
 @Service
@@ -21,7 +22,7 @@ public class JobService {
 
     public Job getJobById(Long id){
         return jobRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Job not found with ID: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Job not found with ID: " + id));
     }
 
     public List<Job> getAllJobs() {
@@ -30,13 +31,13 @@ public class JobService {
 
     public void deleteJob(Long id) {
         jobRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Job not found with ID: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Job not found with ID: " + id));
         jobRepository.deleteById(id);
     }
 
     public Job updateJob(Long id, Job updatedJob) {
         Job existingJob = jobRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Job not found with ID: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Job not found with ID: " + id));
 
         existingJob.setTitle(updatedJob.getTitle());
         existingJob.setDescription(updatedJob.getDescription());

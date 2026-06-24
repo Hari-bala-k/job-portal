@@ -2,6 +2,8 @@ package com.hari.job_portal.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,6 +27,8 @@ public class Company {
     private String location;
     private String website;
     
+    
     @OneToMany(mappedBy = "company")
+    @JsonIgnore
     private List<Job> jobs;
 }

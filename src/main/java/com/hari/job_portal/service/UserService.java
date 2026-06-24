@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.hari.job_portal.entity.User;
+import com.hari.job_portal.exception.ResourceNotFoundException;
 import com.hari.job_portal.repository.UserRepository;
 
 @Service
@@ -25,7 +26,7 @@ public class UserService{
 
     public User getUserById(Long id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + id));
     }
 
     public List<User> getAllUsers() {
@@ -36,7 +37,7 @@ public class UserService{
 
     userRepository.findById(id)
         .orElseThrow(() ->
-            new IllegalArgumentException("User not found")
+            new ResourceNotFoundException("User not found with ID: " + id)
         );
 
     userRepository.deleteById(id);
@@ -44,12 +45,13 @@ public class UserService{
 
    public User updateUser(Long id, User updatedUser) {
         User existingUser = userRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + id));
-
-        existingUser.setName(updatedUser.getName());
-        existingUser.setEmail(updatedUser.getEmail());
-        existingUser.setPassword(updatedUser.getPassword());
-        existingUser.setRole(updatedUser.getRole());
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + id));
+        
+    existingUser.setName(updatedUser.getName());
+    existingUser.setEmail(updatedUser.getEmail());
+    existingUser.setPassword(updatedUser.getPassword());
+    existingUser.setRole(updatedUser.getRole());
+    existingUser.setPhone(updatedUser.getPhone());
 
         return userRepository.save(existingUser);
     }
