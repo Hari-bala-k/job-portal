@@ -26,7 +26,6 @@ public class UserService{
                 "Email already exists: " + userRequestDTO.getEmail()
             );
         }
-
         User user = new User();
 
         user.setName(userRequestDTO.getName());
@@ -57,7 +56,7 @@ public class UserService{
     userRepository.deleteById(id);
    }
 
-   public User updateUser(Long id, User updatedUser) {
+   public User updateUser(Long id, UserRequestDTO updatedUser) {
         User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + id));
         

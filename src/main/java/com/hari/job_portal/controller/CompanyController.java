@@ -6,8 +6,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hari.job_portal.dto.CompanyRequestDTO;
 import com.hari.job_portal.entity.Company;
 import com.hari.job_portal.service.CompanyService;
+
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -27,8 +30,8 @@ public class CompanyController {
     }
     
     @PostMapping
-    public Company createCompany(@RequestBody Company company) {
-        return companyService.saveCompany(company);
+    public Company createCompany( @Valid @RequestBody CompanyRequestDTO companyRequestDTO) {
+        return companyService.saveCompany(companyRequestDTO);
     }
     
     @GetMapping("/{id}")
@@ -42,8 +45,8 @@ public class CompanyController {
     }
 
     @PutMapping("/{id}")
-    public Company updateCompany(@PathVariable Long id, @RequestBody Company updatedCompany) {
-        return companyService.updateCompany(id, updatedCompany);
+    public Company updateCompany(@PathVariable Long id, @Valid @RequestBody CompanyRequestDTO companyRequestDTO) {
+        return companyService.updateCompany(id, companyRequestDTO);
     }
 
     @DeleteMapping("/{id}")

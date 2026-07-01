@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.hari.job_portal.dto.CompanyRequestDTO;
 import com.hari.job_portal.entity.Company;
 import com.hari.job_portal.exception.ResourceNotFoundException;
 import com.hari.job_portal.repository.CompanyRepository;
@@ -17,7 +18,12 @@ public class CompanyService {
         this.companyRepository = companyRepository;
     }
 
-    public Company saveCompany(Company company) {
+    public Company saveCompany(CompanyRequestDTO companyRequestDTO) {
+        Company company = new Company();
+        company.setName(companyRequestDTO.getName());
+        company.setDescription(companyRequestDTO.getDescription());
+        company.setLocation(companyRequestDTO.getLocation());
+        company.setWebsite(companyRequestDTO.getWebsite());
         return companyRepository.save(company);
     }
 
@@ -36,7 +42,7 @@ public class CompanyService {
         return companyRepository.findAll();
     }
 
-    public Company updateCompany(Long id, Company updatedCompany) {
+    public Company updateCompany(Long id, CompanyRequestDTO updatedCompany) {
         Company existingCompany = companyRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Company not found with ID: " + id));
 
