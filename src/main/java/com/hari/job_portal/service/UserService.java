@@ -11,60 +11,131 @@ import com.hari.job_portal.exception.ResourceNotFoundException;
 import com.hari.job_portal.repository.UserRepository;
 
 @Service
-public class UserService{
-      
+public class UserService {
+
+
     private final UserRepository userRepository;
+
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    public User saveUser(UserRequestDTO userRequestDTO) {
 
-         if(userRepository.existsByEmail(userRequestDTO.getEmail())) {
-           throw new DuplicateResourceException(
-            "Email already exists: " + userRequestDTO.getEmail()
-           );
+
+    // CREATE USER
+    public User saveUser(UserRequestDTO dto) {
+
+
+        if(userRepository.existsByEmail(dto.getEmail())) {
+
+            throw new DuplicateResourceException(
+                    "Email already exists: " + dto.getEmail()
+            );
         }
-        User user = new User();
-        user.setName(userRequestDTO.getName());
-        user.setEmail(userRequestDTO.getEmail());
-        user.setPassword(userRequestDTO.getPassword());
-        user.setPhone(userRequestDTO.getPhone());
-        user.setRole(userRequestDTO.getRole());
-           
+
+
+        User user = mapToEntity(dto);
+
         return userRepository.save(user);
     }
 
+
+
+
+    // GET USER BY ID
     public User getUserById(Long id) {
+
         return userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + id));
+                .orElseThrow(() ->
+                    new ResourceNotFoundException(
+                        "User not found with ID: " + id
+                    )
+                );
     }
 
+
+
+
+    // GET ALL USERS
     public List<User> getAllUsers() {
+
         return userRepository.findAll();
     }
 
-    public void deleteUser(Long id){
 
-    userRepository.findById(id)
-        .orElseThrow(() ->
-            new ResourceNotFoundException("User not found with ID: " + id)
-        );
 
-    userRepository.deleteById(id);
-   }
 
-   public User updateUser(Long id, User updatedUser) {
+
+    // DELETE USER
+    public void deleteUser(Long id) {
+
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() ->
+                    new ResourceNotFoundException(
+                        "User not found with ID: " + id
+                    )
+                );
+
+
+        userRepository.delete(user);
+    }
+
+
+
+
+
+    // UPDATE USER
+    public User updateUser(Long id, UserRequestDTO dto) {
+
+
         User existingUser = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + id));
-        
-    existingUser.setName(updatedUser.getName());
-    existingUser.setEmail(updatedUser.getEmail());
-    existingUser.setPassword(updatedUser.getPassword());
-    existingUser.setRole(updatedUser.getRole());
-    existingUser.setPhone(updatedUser.getPhone());
+                .orElseThrow(() ->
+                    new ResourceNotFoundException(
+                        "User not found with ID: " + id
+                    )
+                );
+
+
+
+        if(!existingUser.getEmail().equals(dto.getEmail())
+                && userRepository.existsByEmail(dto.getEmail())) {
+
+            throw new DuplicateResourceException(
+                    "Email already exists: " + dto.getEmail()
+            );
+        }
+
+
+
+        existingUser.setName(dto.getName());
+        existingUser.setEmail(dto.getEmail());
+        existingUser.setPassword(dto.getPassword());
+        existingUser.setPhone(dto.getPhone());
+        existingUser.setRole(dto.getRole());
+
 
         return userRepository.save(existingUser);
     }
+
+
+
+
+
+    private User mapToEntity(UserRequestDTO dto) {
+
+
+        User user = new User();
+
+        user.setName(dto.getName());
+        user.setEmail(dto.getEmail());
+        user.setPassword(dto.getPassword());
+        user.setPhone(dto.getPhone());
+        user.setRole(dto.getRole());
+
+
+        return user;
+    }
+
 }
