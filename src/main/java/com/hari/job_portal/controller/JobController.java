@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hari.job_portal.dto.JobRequestDTO;
 import com.hari.job_portal.entity.Job;
 import com.hari.job_portal.service.JobService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/jobs")
@@ -25,8 +28,8 @@ public class JobController {
      }
 
      @PostMapping
-     public Job createJob(@RequestBody Job job) {
-         return jobService.saveJob(job);
+     public Job createJob(@Valid @RequestBody JobRequestDTO jobRequestDTO) {
+         return jobService.saveJob(jobRequestDTO);
      }
      
      @GetMapping
@@ -39,8 +42,8 @@ public class JobController {
      }
 
      @PutMapping("/{id}")
-     public Job updateJob(@PathVariable Long id, @RequestBody Job updatedJob) {
-         return jobService.updateJob(id, updatedJob);
+     public Job updateJob(@PathVariable Long id, @Valid @RequestBody JobRequestDTO jobRequestDTO) {
+         return jobService.updateJob(id, jobRequestDTO);
      }
 
      @DeleteMapping("/{id}")
