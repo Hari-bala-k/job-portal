@@ -1,7 +1,5 @@
 package com.hari.job_portal.dto;
 
-import com.hari.job_portal.entity.Company;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
