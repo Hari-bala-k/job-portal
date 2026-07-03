@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import org.springframework.stereotype.Service;
 
+import com.hari.job_portal.dto.ApplyRequestDTO;
+import com.hari.job_portal.dto.UpdateApplicationRequestDTO;
 import com.hari.job_portal.entity.Application;
 import com.hari.job_portal.entity.ApplicationStatus;
 import com.hari.job_portal.entity.Job;
@@ -26,26 +28,26 @@ public class ApplicationService {
         this.jobRepository = jobRepository;
     }
 
-    public Application applyJob(Long userId, Long jobId) {
+    public Application applyJob(ApplyRequestDTO request ) {
         Application application = new Application();
        
-       User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
+       User user = userRepository.findById(request.getUserId())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + request.getUserId()));
 
-       Job job = jobRepository.findById(jobId)
-                .orElseThrow(() -> new ResourceNotFoundException("Job not found with ID: " + jobId)); 
+       Job job = jobRepository.findById(request.getJobId())
+                .orElseThrow(() -> new ResourceNotFoundException("Job not found with ID: " + request.getJobId())); 
                 
         application.setJob(job);
         application.setUser(user);
-        application.setStatus(ApplicationStatus.APPLIED); 
+        application.setStatus(ApplicationStatus.APPLIED);
         application.setApplicationDate(LocalDate.now());
         return applicationRepository.save(application);
     }
 
-    public Application updateApplicationStatus(Long applicationId, ApplicationStatus status) {
+    public Application updateApplicationStatus(Long applicationId, UpdateApplicationRequestDTO updateRequest) {
         Application application = applicationRepository.findById(applicationId)
                 .orElseThrow(() -> new ResourceNotFoundException("Application not found with ID: " + applicationId));
-        application.setStatus(status);
+        application.setStatus(updateRequest.getStatus());
         return applicationRepository.save(application);
     }
 }
