@@ -1,6 +1,7 @@
 package com.hari.job_portal.service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,16 @@ public class ApplicationService {
         this.userRepository = userRepository;
         this.jobRepository = jobRepository;
     }
+
+    public Application getApplicationById(Long id) {
+        return applicationRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Application not found with ID: " + id));
+    }
+     
+   public List<Application> getApplication() {
+        return applicationRepository.findAll();
+    }
+
 
     public Application applyJob(ApplyRequestDTO request ) {
         Application application = new Application();
