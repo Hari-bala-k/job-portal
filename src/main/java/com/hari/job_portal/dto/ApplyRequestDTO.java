@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ApplicationRequestDTO {
+public class ApplyRequestDTO {
 
     @NotNull(message = "User ID is required")
     private Long userId;
