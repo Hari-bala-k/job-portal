@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hari.job_portal.dto.CompanyRequestDTO;
-import com.hari.job_portal.entity.Company;
+import com.hari.job_portal.dto.CompanyResponseDTO;
 import com.hari.job_portal.service.CompanyService;
 
 import jakarta.validation.Valid;
@@ -30,22 +30,22 @@ public class CompanyController {
     }
     
     @PostMapping
-    public Company createCompany( @Valid @RequestBody CompanyRequestDTO companyRequestDTO) {
+    public CompanyResponseDTO createCompany( @Valid @RequestBody CompanyRequestDTO companyRequestDTO) {
         return companyService.saveCompany(companyRequestDTO);
     }
     
     @GetMapping("/{id}")
-    public Company getCompanyById(@PathVariable Long id) {
+    public CompanyResponseDTO getCompanyById(@PathVariable Long id) {
         return companyService.getCompanyById(id);
     }
 
     @GetMapping
-    public List<Company> getAllCompanies() {
+    public List<CompanyResponseDTO> getAllCompanies() {
         return companyService.getAllCompanies();
     }
 
     @PutMapping("/{id}")
-    public Company updateCompany(@PathVariable Long id, @Valid @RequestBody CompanyRequestDTO companyRequestDTO) {
+    public CompanyResponseDTO updateCompany(@PathVariable Long id, @Valid @RequestBody CompanyRequestDTO companyRequestDTO) {
         return companyService.updateCompany(id, companyRequestDTO);
     }
 
