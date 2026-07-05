@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hari.job_portal.dto.UserRequestDTO;
+import com.hari.job_portal.dto.UserResponseDTO;
 import com.hari.job_portal.entity.User;
 import com.hari.job_portal.service.UserService;
 
@@ -28,22 +29,22 @@ public class UserController {
     }
     
     @PostMapping
-    public User createUser(@Valid @RequestBody UserRequestDTO userRequestDTO) {
+    public UserResponseDTO createUser(@Valid @RequestBody UserRequestDTO userRequestDTO) {
         return userService.saveUser(userRequestDTO);
     }
     
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable Long id) {
+    public UserResponseDTO getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
     }
 
     @GetMapping
-    public List<User> getAllUsers() {
+    public List<UserResponseDTO> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @PutMapping("/{id}")
-    public User updateUser(@PathVariable Long id, @Valid @RequestBody UserRequestDTO userRequestDTO) {
+    public UserResponseDTO  updateUser(@PathVariable Long id, @Valid @RequestBody UserRequestDTO userRequestDTO) {
         return userService.updateUser(id, userRequestDTO);
     }
 
