@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hari.job_portal.dto.UserRequestDTO;
 import com.hari.job_portal.dto.UserResponseDTO;
-import com.hari.job_portal.entity.User;
 import com.hari.job_portal.service.UserService;
 
 import jakarta.validation.Valid;
