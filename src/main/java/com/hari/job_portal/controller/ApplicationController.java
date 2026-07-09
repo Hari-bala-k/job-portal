@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hari.job_portal.dto.ApplicationResponseDTO;
 import com.hari.job_portal.dto.ApplyRequestDTO;
 import com.hari.job_portal.dto.UpdateApplicationRequestDTO;
-import com.hari.job_portal.entity.Application;
 import com.hari.job_portal.service.ApplicationService;
 
 import jakarta.validation.Valid;
@@ -28,20 +28,24 @@ public class ApplicationController {
             this.applicationService = applicationService;
         }
         @GetMapping("/{id}")
-        public Application getApplicationById(@PathVariable Long id) {
+        public ApplicationResponseDTO getApplicationById(@PathVariable Long id) {
             return applicationService.getApplicationById(id);
         }
         @GetMapping
-        public List<Application> getApplications() {
-            return applicationService.getApplication();
+        public List<ApplicationResponseDTO> getApplications() {
+            return applicationService.getAllApplications();
         }
       @PostMapping("/apply")
-        public Application applyJob(@Valid @RequestBody ApplyRequestDTO request) {
+        public ApplicationResponseDTO applyJob(@Valid @RequestBody ApplyRequestDTO request) {
             return applicationService.applyJob(request);
         }
-      
-      @PutMapping("/update-status/{id}")
-      public Application updateStatus(@PathVariable Long id, @Valid @RequestBody UpdateApplicationRequestDTO updateRequest) {
-          return applicationService.updateApplicationStatus(id, updateRequest);
-      }   
+        
+        @PutMapping("/{id}")
+        public ApplicationResponseDTO updateApplicationStatus(
+            @PathVariable Long id,
+            @Valid @RequestBody UpdateApplicationRequestDTO request) {
+
+        return applicationService.updateApplicationStatus(id, request.getStatus());
+    }
+
 }
